@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
     // 화면의 너비를 가져옵니다.
     final screenWidth = MediaQuery.of(context).size.width;
 
-    // 이미지의 가로세로 비율에 따라 높이를 계산합니다 (예: 2:3 비율).
+    // 이미지의 가로세로 비율에 따라 높이를 계산합니다.
     final imageHeight = screenWidth * 1.5; // 3:2 비율이므로 1.5를 곱함
 
     return Scaffold(
