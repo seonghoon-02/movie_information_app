@@ -7,7 +7,7 @@ class MovieListService {
 
   MovieListService(this.movieListRepository);
 
-  Future<List<MovieListEntity>> fetchMovies(String category) async {
+  Future<List<MovieListEntity>> fetchMovieList(String category) async {
     // DTO 데이터를 Repository에서 가져옴
     final movieListDtos = await movieListRepository.getMovieList(category);
 

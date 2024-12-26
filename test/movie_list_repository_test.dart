@@ -37,7 +37,7 @@ void main() {
         ]);
 
     // Act
-    final movies = await movieService.fetchMovies('popular');
+    final movies = await movieService.fetchMovieList('popular');
 
     // Assert
     expect(movies, isNotEmpty);
