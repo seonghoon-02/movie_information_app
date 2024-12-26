@@ -1,4 +1,4 @@
-class MovieResponseDto {
+class MovieListDto {
   bool adult;
   String backdropPath;
   List<int> genreIds;
@@ -14,7 +14,7 @@ class MovieResponseDto {
   double voteAverage;
   int voteCount;
 
-  MovieResponseDto({
+  MovieListDto({
     required this.adult,
     required this.backdropPath,
     required this.genreIds,
@@ -32,8 +32,8 @@ class MovieResponseDto {
   });
 
   // JSON을 DTO 객체로 변환하는 팩토리 메소드
-  factory MovieResponseDto.fromJson(Map<String, dynamic> json) {
-    return MovieResponseDto(
+  factory MovieListDto.fromJson(Map<String, dynamic> json) {
+    return MovieListDto(
       adult: json['adult'],
       backdropPath: json['backdrop_path'],
       genreIds: List<int>.from(json['genre_ids']),
