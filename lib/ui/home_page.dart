@@ -44,7 +44,8 @@ class HomePage extends ConsumerWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => DetailPage()),
+                        MaterialPageRoute(
+                            builder: (context) => DetailPage(id: movies[0].id)),
                       );
                     },
                     child: Container(

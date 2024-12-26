@@ -102,7 +102,8 @@ class MovieDetailDto {
       originalTitle: json['original_title'],
       overview: json['overview'],
       popularity: json['popularity'].toDouble(),
-      posterPath: json['poster_path'],
+      posterPath:
+          'https://media.themoviedb.org/t/p/w220_and_h330_face${json['poster_path']}',
       productionCompanies: productionCompaniesList,
       releaseDate: json['release_date'],
       revenue: json['revenue'],

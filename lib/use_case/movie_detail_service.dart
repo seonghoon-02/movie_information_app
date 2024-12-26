@@ -30,6 +30,7 @@ class MovieDetailService {
       title: movieDetailDto.title,
       voteAverage: movieDetailDto.voteAverage,
       voteCount: movieDetailDto.voteCount,
+      posterPath: movieDetailDto.posterPath,
     );
 
     return movieDetailEntity;

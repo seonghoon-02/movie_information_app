@@ -38,6 +38,8 @@ class MovieDetailEntity {
   /// 영화에 대한 총 투표 수
   final int voteCount;
 
+  final String posterPath;
+
   MovieDetailEntity({
     required this.budget,
     required this.genres,
@@ -52,5 +54,6 @@ class MovieDetailEntity {
     required this.title,
     required this.voteAverage,
     required this.voteCount,
+    required this.posterPath,
   });
 }
