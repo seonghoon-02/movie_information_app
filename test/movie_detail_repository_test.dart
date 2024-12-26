@@ -1,8 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:movie_information_app/dto/movie_detail_dto.dart';
+import 'package:movie_information_app/entity/movie_detail_entity.dart';
 import 'package:movie_information_app/repository/movie_detail_repository.dart';
-import 'package:movie_information_app/use_case/movie_service.dart';
+import 'package:movie_information_app/use_case/movie_detail_service.dart';
 
 class MockMovieDetailRepository extends Mock implements MovieDetailRepository {}
 
@@ -15,7 +16,7 @@ void main() {
     movieDetailService = MovieDetailService(mockRepository);
   });
 
-  test('fetchMovieDetail returns movie details', () async {
+  test('fetchMovieDetail returns movie details as MovieDetailEntity', () async {
     // Arrange
     final movieId = 12345;
     final mockResponse = MovieDetailDto(
@@ -48,23 +49,25 @@ void main() {
       title: 'Test Movie',
       voteAverage: 8.5,
       voteCount: 1000,
+      budget: 310000000, // budget 추가
     );
 
     when(() => mockRepository.getMovieDetail(movieId))
         .thenAnswer((_) async => mockResponse);
 
     // Act
-    final movieDetail = await movieDetailService.fetchMovieDetail(movieId);
+    final movieDetailEntity =
+        await movieDetailService.fetchMovieDetail(movieId);
 
     // Assert
-    expect(movieDetail.id, movieId);
-    expect(movieDetail.title, 'Test Movie');
-    expect(movieDetail.overview, 'This is a test movie.');
-    expect(movieDetail.genres, isNotEmpty);
-    expect(movieDetail.genres.first.name, 'Action');
-    expect(
-        movieDetail.productionCompanies.first.name, 'Test Production Company');
-    expect(movieDetail.runtime, 120);
-    expect(movieDetail.voteAverage, 8.5);
+    expect(movieDetailEntity.id, movieId);
+    expect(movieDetailEntity.title, 'Test Movie');
+    expect(movieDetailEntity.overview, 'This is a test movie.');
+    expect(movieDetailEntity.genres, isNotEmpty);
+    expect(movieDetailEntity.genres.first, 'Action'); // String으로 변환된 장르 확인
+    expect(movieDetailEntity.productionCompanyLogos.first, '/logo.png');
+    expect(movieDetailEntity.runtime, 120);
+    expect(movieDetailEntity.voteAverage, 8.5);
+    expect(movieDetailEntity.budget, 310000000); // budget이 제대로 변환되었는지 확인
   });
 }

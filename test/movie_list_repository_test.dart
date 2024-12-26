@@ -2,17 +2,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:movie_information_app/dto/movie_list_dto.dart';
 import 'package:movie_information_app/repository/movie_list_repository.dart';
-import 'package:movie_information_app/use_case/movie_service.dart';
+import 'package:movie_information_app/use_case/movie_list_service.dart';
 
 class MockMovieRepository extends Mock implements MovieListRepository {}
 
 void main() {
   late MockMovieRepository mockRepository;
-  late MovieService movieService;
+  late MovieListService movieService;
 
   setUp(() {
     mockRepository = MockMovieRepository();
-    movieService = MovieService(mockRepository);
+    movieService = MovieListService(mockRepository);
   });
 
   test('fetchMovies returns movie list', () async {
@@ -41,6 +41,6 @@ void main() {
 
     // Assert
     expect(movies, isNotEmpty);
-    expect(movies.first.title, 'Test Movie');
+    expect(movies.first.id, 12345);
   });
 }

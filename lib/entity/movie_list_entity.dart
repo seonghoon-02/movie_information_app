@@ -1,8 +1,8 @@
-class MovieEntity {
+class MovieListEntity {
   final int id;
   final String posterPath;
 
-  MovieEntity({
+  MovieListEntity({
     required this.id,
     required this.posterPath,
   });

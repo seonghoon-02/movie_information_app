@@ -58,6 +58,7 @@ class MovieDetailDto {
   final String title;
   final double voteAverage;
   final int voteCount;
+  final int budget; // budget 필드 추가
 
   MovieDetailDto({
     required this.adult,
@@ -79,16 +80,18 @@ class MovieDetailDto {
     required this.title,
     required this.voteAverage,
     required this.voteCount,
+    required this.budget,
   });
 
   factory MovieDetailDto.fromJson(Map<String, dynamic> json) {
-    var genresList =
-        (json['genres'] as List).map((e) => Genre.fromJson(e)).toList();
+    var genresList = (json['genres'] as List)
+        .map((e) => Genre.fromJson(e))
+        .toList(); // Genre 객체로 변환
     var productionCompaniesList = (json['production_companies'] as List)
         .map((e) => ProductionCompany.fromJson(e))
-        .toList();
-    var spokenLanguagesList = List<String>.from(
-        json['spoken_languages'].map((language) => language['name']));
+        .toList(); // ProductionCompany 객체로 변환
+    var spokenLanguagesList = List<String>.from(json['spoken_languages']
+        .map((language) => language['name'])); // List<String>으로 변환
 
     return MovieDetailDto(
       adult: json['adult'],
@@ -110,6 +113,7 @@ class MovieDetailDto {
       title: json['title'],
       voteAverage: json['vote_average'].toDouble(),
       voteCount: json['vote_count'],
+      budget: json['budget'],
     );
   }
 }
