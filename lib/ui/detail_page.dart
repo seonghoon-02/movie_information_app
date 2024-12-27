@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_information_app/view_model/movie_detail_view_model.dart';
 
-class DetailPage extends ConsumerWidget {
+class DetailPageList extends ConsumerWidget {
   final int id;
+  final String category;
 
-  DetailPage({required this.id});
+  DetailPageList({required this.id, required this.category});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,7 +34,7 @@ class DetailPage extends ConsumerWidget {
                   Navigator.pop(context);
                 },
                 child: Hero(
-                  tag: id,
+                  tag: '$id',
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -158,6 +159,7 @@ class DetailPage extends ConsumerWidget {
                                       height: 129,
                                       width: 200,
                                       decoration: BoxDecoration(
+                                        color: Colors.white,
                                         image: DecorationImage(
                                           image: NetworkImage(movieDetail
                                               .productionCompanyLogos[index]),

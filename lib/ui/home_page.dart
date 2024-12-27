@@ -39,6 +39,7 @@ class HomePage extends ConsumerWidget {
               popularMovies.when(
                 data: (movies) {
                   bool _isNavigating = false;
+                  String category = 'main';
                   // 데이터가 로드되었을 때 UI
                   return GestureDetector(
                     onTap: () {
@@ -47,15 +48,16 @@ class HomePage extends ConsumerWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailPage(id: movies[0].id)),
+                            builder: (context) => DetailPageList(
+                                id: movies[0].id, category: category),
+                          ),
                         ).then((_) {
                           _isNavigating = false;
                         });
                       }
                     },
                     child: Hero(
-                      tag: movies[0].id,
+                      tag: '$category${movies[0].id}',
                       child: Container(
                         height: imageHeight,
                         width: double.infinity,
@@ -93,7 +95,7 @@ class HomePage extends ConsumerWidget {
                 height: 10,
               ),
               nowMovies.when(
-                data: movieListView,
+                data: (movies) => movieListView(movies, 'now'),
                 loading: () {
                   // 로딩 중일 때 UI
                   return Center(
@@ -120,7 +122,8 @@ class HomePage extends ConsumerWidget {
               ),
 
               popularMovies.when(
-                data: (movies) => movieListView(movies, showNumbers: true),
+                data: (movies) =>
+                    movieListView(movies, 'popular', showNumbers: true),
                 loading: () {
                   // 로딩 중일 때 UI
                   return Center(
@@ -145,7 +148,7 @@ class HomePage extends ConsumerWidget {
                 height: 10,
               ),
               topMovies.when(
-                data: movieListView,
+                data: (movies) => movieListView(movies, 'top'),
                 loading: () {
                   // 로딩 중일 때 UI
                   return Center(
@@ -170,7 +173,7 @@ class HomePage extends ConsumerWidget {
                 height: 10,
               ),
               comingMovies.when(
-                data: movieListView,
+                data: (movies) => movieListView(movies, 'coming'),
                 loading: () {
                   // 로딩 중일 때 UI
                   return Center(
@@ -191,7 +194,8 @@ class HomePage extends ConsumerWidget {
     );
   }
 
-  Widget movieListView(List movies, {bool showNumbers = false}) {
+  Widget movieListView(List movies, String category,
+      {bool showNumbers = false}) {
     return Container(
       height: 180,
       width: double.infinity,
@@ -208,14 +212,15 @@ class HomePage extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DetailPage(id: movies[index].id)),
+                      builder: (context) => DetailPageList(
+                          id: movies[index].id, category: category)),
                 ).then((_) {
                   _isNavigating = false;
                 });
               }
             },
             child: Hero(
-              tag: movies[index].id,
+              tag: '$category${movies[index].id}',
               child: Stack(
                 children: [
                   Container(
