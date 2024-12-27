@@ -19,8 +19,11 @@ class MovieDetailService {
           .toList(), // List<Genre>를 List<String>으로 변환
       id: movieDetailDto.id,
       productionCompanyLogos: movieDetailDto.productionCompanies
-          .map((company) => company.logoPath ?? '')
-          .toList(),
+          .where((company) =>
+              company.logoPath != null) // logoPath가 null이 아닌 경우만 필터링
+          .map((company) =>
+              'https://image.tmdb.org/t/p/w200${company.logoPath!}')
+          .toList(), // null-safe logoPath를 리스트에 추가
       overview: movieDetailDto.overview,
       popularity: movieDetailDto.popularity,
       releaseDate: movieDetailDto.releaseDate,

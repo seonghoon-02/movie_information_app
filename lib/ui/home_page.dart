@@ -38,23 +38,32 @@ class HomePage extends ConsumerWidget {
               // AsyncValue 상태를 확인하고, 각각에 맞는 UI를 표시
               popularMovies.when(
                 data: (movies) {
+                  bool _isNavigating = false;
                   // 데이터가 로드되었을 때 UI
                   return GestureDetector(
-                    //**********임시 이동코드
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DetailPage(id: movies[0].id)),
-                      );
+                      if (!_isNavigating) {
+                        _isNavigating = true;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailPage(id: movies[0].id)),
+                        ).then((_) {
+                          _isNavigating = false;
+                        });
+                      }
                     },
-                    child: Container(
-                      height: imageHeight,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(movies[0].posterPath),
-                          fit: BoxFit.cover, // 이미지를 화면에 꽉 채우도록 설정
+                    child: Hero(
+                      tag: movies[0].id,
+                      child: Container(
+                        height: imageHeight,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(movies[0].posterPath),
+                            fit: BoxFit.cover, // 이미지를 화면에 꽉 채우도록 설정
+                          ),
                         ),
                       ),
                     ),
@@ -190,36 +199,55 @@ class HomePage extends ConsumerWidget {
         scrollDirection: Axis.horizontal,
         itemCount: movies.length,
         itemBuilder: (context, index) {
-          return Stack(
-            children: [
-              Container(
-                height: 180,
-                width: showNumbers ? 150 : 130,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    alignment: showNumbers
-                        ? Alignment.centerRight
-                        : Alignment.centerLeft, // 조건에 따라 정렬 변경
-                    image: NetworkImage(movies[index].posterPath),
-                    fit: BoxFit.fitHeight, // 이미지를 화면에 꽉 채우도록 설정
-                  ),
-                  borderRadius: BorderRadius.circular(8), // 이미지 모서리 둥글게 설정
-                ),
-              ),
-              if (showNumbers) // 숫자를 표시 여부를 결정
-                Positioned(
-                  top: 70, // 숫자의 Y축 위치를 조정
-                  left: 0, // 숫자의 X축 위치를 조정
-                  child: Text(
-                    '${index + 1}', // 숫자를 표시 (1부터 시작)
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 90,
-                      fontWeight: FontWeight.bold,
+          bool _isNavigating = false;
+
+          return GestureDetector(
+            onTap: () {
+              if (!_isNavigating) {
+                _isNavigating = true;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailPage(id: movies[index].id)),
+                ).then((_) {
+                  _isNavigating = false;
+                });
+              }
+            },
+            child: Hero(
+              tag: movies[index].id,
+              child: Stack(
+                children: [
+                  Container(
+                    height: 180,
+                    width: showNumbers ? 150 : 135,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        alignment: showNumbers
+                            ? Alignment.centerRight
+                            : Alignment.center, // 조건에 따라 정렬 변경
+                        image: NetworkImage(movies[index].posterPath),
+                        fit: BoxFit.contain, // 이미지를 화면에 꽉 채우도록 설정
+                      ),
+                      borderRadius: BorderRadius.circular(8), // 이미지 모서리 둥글게 설정
                     ),
                   ),
-                ),
-            ],
+                  if (showNumbers) // 숫자를 표시 여부를 결정
+                    Positioned(
+                      top: 70, // 숫자의 Y축 위치를 조정
+                      left: 0, // 숫자의 X축 위치를 조정
+                      child: Text(
+                        '${index + 1}', // 숫자를 표시 (1부터 시작)
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 90,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           );
         },
       ),

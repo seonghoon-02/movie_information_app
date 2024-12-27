@@ -8,7 +8,7 @@ class MovieDetailEntity {
   /// 영화의 고유 ID
   final int id;
 
-  /// 제작 회사 로고들의 리스트 (각 로고는 이미지 경로 또는 URL일 수 있음)
+  /// 제작 회사 로고들의 리스트 (각 로고는 이미지 URL)
   final List<String> productionCompanyLogos;
 
   /// 영화에 대한 간략한 설명 (줄거리)
@@ -35,7 +35,7 @@ class MovieDetailEntity {
   /// 영화의 평균 평점 (예: 8.4)
   final double voteAverage;
 
-  /// 영화에 대한 총 투표 수
+  /// 영화에 대한 평점투표수
   final int voteCount;
 
   final String posterPath;
