@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_information_app/view_model/movie_detail_view_model.dart';
+import 'package:movie_information_app/view_model/movie_similar_view_model.dart';
 
 class DetailPageList extends ConsumerWidget {
   final int id;
@@ -13,6 +14,8 @@ class DetailPageList extends ConsumerWidget {
     final movieDetailAsync = ref.watch(movieDetailViewModelProvider(id));
     final screenWidth = MediaQuery.of(context).size.width;
     final imageHeight = screenWidth * 1.5;
+    final similarMovies =
+        ref.watch(movieSimilarViewModelProvider(id)); //비슷한 영화 목록
 
     return Scaffold(
       body: SafeArea(
@@ -27,7 +30,7 @@ class DetailPageList extends ConsumerWidget {
                 child: Text('영화 정보를 가져올 수 없습니다.'),
               );
             }
-
+            print('aaaaaaaaaaaaaaaaaaaaaaa$similarMovies');
             return SingleChildScrollView(
               child: GestureDetector(
                 onTap: () {
@@ -171,6 +174,21 @@ class DetailPageList extends ConsumerWidget {
                                 },
                               ),
                             ),
+                            similarMovies.when(
+                              data: (movies) => movieSimilarView(movies, id),
+                              loading: () {
+                                // 로딩 중일 때 UI
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+                              error: (error, stackTrace) {
+                                // 에러 발생 시 UI
+                                return Center(
+                                  child: Text('Error: $error'),
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -205,6 +223,31 @@ class DetailPageList extends ConsumerWidget {
             Flexible(flex: 1, child: Text(title)),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget movieSimilarView(List movies, int id) {
+    return Container(
+      height: 180,
+      width: double.infinity,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: movies.length,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 180,
+            width: 135,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                alignment: Alignment.center, // 조건에 따라 정렬 변경
+                image: NetworkImage(movies[index].posterPath),
+                fit: BoxFit.contain, // 이미지를 화면에 꽉 채우도록 설정
+              ),
+              borderRadius: BorderRadius.circular(8), // 이미지 모서리 둥글게 설정
+            ),
+          );
+        },
       ),
     );
   }
