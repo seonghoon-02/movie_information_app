@@ -8,13 +8,13 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // 각각의 카테고리 데이터를 구독
     final popularMovies =
-        ref.watch(movieListViewModelProvider('popular')); //인기순
-    final nowMovies =
-        ref.watch(movieListViewModelProvider('now_playing')); //현재상영중
+        ref.watch(movieListViewModelProvider('popular')); //인기순 popular
+    final nowMovies = ref
+        .watch(movieListViewModelProvider('now_playing')); //현재상영중 now_playing
     final topMovies =
-        ref.watch(movieListViewModelProvider('top_rated')); //평점높은순
+        ref.watch(movieListViewModelProvider('top_rated')); //평점높은순 top_rated
     final comingMovies =
-        ref.watch(movieListViewModelProvider('upcoming')); //개봉예정
+        ref.watch(movieListViewModelProvider('upcoming')); //개봉예정 upcoming
 
     // 화면의 너비를 가져옵니다.
     final screenWidth = MediaQuery.of(context).size.width;

@@ -30,11 +30,9 @@ final movieSimilarViewModelProvider = StateNotifierProvider.family<
     final movieSimilarService = ref.watch(movieSimilarServiceProvider);
     final viewModel =
         MovieSimilarViewModel(movieSimilarService: movieSimilarService);
-    print('dddddddddddd');
 
     // ViewModel 초기화: 카테고리 데이터를 로드
     viewModel.fetchSimilarMovies(id);
-    print('eeeeeeeeeeeeee');
 
     return viewModel;
   },

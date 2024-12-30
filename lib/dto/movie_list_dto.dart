@@ -33,6 +33,10 @@ class MovieListDto {
 
   // JSON을 DTO 객체로 변환하는 팩토리 메소드
   factory MovieListDto.fromJson(Map<String, dynamic> json) {
+    // 'poster_path'가 없으면 예외를 발생시킴
+    if (json['poster_path'] == null) {
+      throw ArgumentError('Poster path is required');
+    }
     return MovieListDto(
       adult: json['adult'],
       backdropPath: json['backdrop_path'],

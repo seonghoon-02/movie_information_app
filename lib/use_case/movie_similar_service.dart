@@ -13,8 +13,6 @@ class MovieSimilarService {
 
     // DTO -> Entity로 변환
     final movieSimilarEntities = movieSimilarDtos.map((dto) {
-      print('cccccccccccccc');
-      print('service bbbbbbbbbbbbbbbbbbbb${dto.posterPath}');
       return MovieListEntity(
         id: dto.id,
         posterPath: dto.posterPath,

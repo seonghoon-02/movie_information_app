@@ -30,7 +30,6 @@ class DetailPageList extends ConsumerWidget {
                 child: Text('영화 정보를 가져올 수 없습니다.'),
               );
             }
-            print('aaaaaaaaaaaaaaaaaaaaaaa$similarMovies');
             return SingleChildScrollView(
               child: GestureDetector(
                 onTap: () {
@@ -174,6 +173,12 @@ class DetailPageList extends ConsumerWidget {
                                 },
                               ),
                             ),
+                            SizedBox(height: 16),
+                            Text(
+                              '비슷한 영화',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
                             similarMovies.when(
                               data: (movies) => movieSimilarView(movies, id),
                               loading: () {
@@ -244,7 +249,6 @@ class DetailPageList extends ConsumerWidget {
                 image: NetworkImage(movies[index].posterPath),
                 fit: BoxFit.contain, // 이미지를 화면에 꽉 채우도록 설정
               ),
-              borderRadius: BorderRadius.circular(8), // 이미지 모서리 둥글게 설정
             ),
           );
         },
